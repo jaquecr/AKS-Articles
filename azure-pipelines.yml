@@ -29,7 +29,6 @@ stages:
         inputs:
           command: 'validate'
 
-
   - stage: Deploy
     jobs:
     - deployment: Deploy_Terraform
