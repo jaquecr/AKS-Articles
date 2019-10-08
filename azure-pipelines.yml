@@ -13,10 +13,6 @@ stages:
       steps:
       - publish: 1-terraform
         artifact: terraform_out
-    
-      - task: TerraformInstaller@0
-        inputs:
-          terraformVersion: '0.11.11'
 
       - task: TerraformCLI@0
         inputs:
