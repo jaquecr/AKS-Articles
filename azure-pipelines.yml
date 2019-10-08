@@ -6,14 +6,40 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+stages:
+- stage: Build
+  jobs:
+  - job: Build 
+    pool:
+      vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+    steps:
+    - script: echo Hello, world!
+      displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- stage: Validate
+  jobs:
+  - job: Validate
+    steps:
+    - publish: 1-terraform
+      artifact: terraform_out
+    
+    - task: TerraformInstaller@0
+      inputs:
+        terraformVersion: '0.11.11'
+
+    - task: TerraformCLI@0
+      inputs:
+            command: 'init'
+            backendType: 'azurerm'
+            backendServiceArm: 'Visual Studio Enterprise'
+            ensureBackend: true
+            backendAzureRmResourceGroupName: 'AKSTerraform-RG'
+            backendAzureRmResourceGroupLocation: 'EastUS2'
+            backendAzureRmStorageAccountName: 'stgaksterraformdemo'
+            backendAzureRmContainerName: 'tfstate'
+            backendAzureRmKey: 'demo.terraform.tfstte'
+
+    - task: TerraformCLI@0
+      inputs:
+        command: 'validate'
