@@ -32,14 +32,11 @@ stages:
 
   - stage: Deploy
     jobs:
-      - deployment: Deploy_Terraform
+      - job:
         pool:
           vmImage: 'ubuntu-latest'
-        environment: 'DEV'
-        strategy:
-          runOnce: 
-            deploy: 
-              steps: 
+          environment: 'DEV' 
+          steps: 
               - task: TerraformCLI@0
                 inputs:
                   command: 'init'
