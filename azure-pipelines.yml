@@ -19,7 +19,6 @@ stages:
             command: 'init'
             backendType: 'azurerm'
             backendServiceArm: 'Visual Studio Enterprise'
-            ensureBackend: true
             backendAzureRmResourceGroupName: 'AKSTerraform-RG'
             backendAzureRmResourceGroupLocation: 'EastUS2'
             backendAzureRmStorageAccountName: 'stgaksterraformdemo'
@@ -47,7 +46,6 @@ stages:
                   workingDirectory: '$Pipeline.Workspace)/terraform_out'
                   backendType: 'azurerm'
                   backendServiceArm: 'Visual Studio Enterprise'
-                  ensureBackend: true
                   backendAzureRmResourceGroupName: 'AKSTerraform-RG'
                   backendAzureRmResourceGroupLocation: 'EastUS2'
                   backendAzureRmStorageAccountName: 'nyuenterraformstate'
