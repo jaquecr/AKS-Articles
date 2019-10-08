@@ -32,11 +32,14 @@ stages:
 
   - stage: Deploy
     jobs:
-      - job:
-        pool:
-          vmImage: 'ubuntu-latest'
-          environment: 'DEV' 
-          steps: 
+    - deployment: Deploy_Terraform
+      pool:
+        vmImage: 'ubuntu-latest'
+      environment: 'DEV' 
+      strategy:
+        runOnce:
+          deploy:
+            steps: 
               - task: TerraformCLI@0
                 inputs:
                   command: 'init'
@@ -45,7 +48,7 @@ stages:
                   backendServiceArm: 'Visual Studio Enterprise'
                   backendAzureRmResourceGroupName: 'AKSTerraform-RG'
                   backendAzureRmResourceGroupLocation: 'EastUS2'
-                  backendAzureRmStorageAccountName: 'nyuenterraformstate'
+                  backendAzureRmStorageAccountName: 'stgaksterraformdemo'
                   backendAzureRmContainerName: 'tfstate'
                   backendAzureRmKey: 'demo.terraform.tfstate'
 
