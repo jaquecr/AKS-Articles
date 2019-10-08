@@ -7,29 +7,19 @@ trigger:
 - master
 
 stages:
-- stage: Build
-  jobs:
-  - job: Build 
-    pool:
-      vmImage: 'ubuntu-latest'
-
-    steps:
-    - script: echo Hello, world!
-      displayName: 'Run a one-line script'
-
-- stage: Validate
-  jobs:
-  - job: Validate
-    steps:
-    - publish: 1-terraform
-      artifact: terraform_out
+  - stage: Validate
+    jobs:
+    - job: Validate
+      steps:
+      - publish: 1-terraform
+        artifact: terraform_out
     
-    - task: TerraformInstaller@0
-      inputs:
-        terraformVersion: '0.11.11'
+      - task: TerraformInstaller@0
+        inputs:
+          terraformVersion: '0.11.11'
 
-    - task: TerraformCLI@0
-      inputs:
+      - task: TerraformCLI@0
+        inputs:
             command: 'init'
             backendType: 'azurerm'
             backendServiceArm: 'Visual Studio Enterprise'
@@ -40,6 +30,6 @@ stages:
             backendAzureRmContainerName: 'tfstate'
             backendAzureRmKey: 'demo.terraform.tfstte'
 
-    - task: TerraformCLI@0
-      inputs:
-        command: 'validate'
+      - task: TerraformCLI@0
+        inputs:
+          command: 'validate'
