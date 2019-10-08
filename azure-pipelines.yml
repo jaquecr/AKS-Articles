@@ -43,7 +43,7 @@ stages:
               - task: TerraformCLI@0
                 inputs:
                   command: 'init'
-                  workingDirectory: '$Pipeline.Workspace)/terraform_out'
+                  workingDirectory: '$(Pipeline.Workspace)/terraform_out'
                   backendType: 'azurerm'
                   backendServiceArm: 'Visual Studio Enterprise'
                   backendAzureRmResourceGroupName: 'AKSTerraform-RG'
